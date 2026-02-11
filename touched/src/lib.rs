@@ -2,6 +2,7 @@
 
 mod primitive;
 mod slice;
+mod tuple;
 mod util;
 
 #[cfg(feature = "derive")]

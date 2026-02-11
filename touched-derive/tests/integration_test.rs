@@ -16,15 +16,23 @@ struct WithGenric<T: Touchable, F: Touchable> {
 
 #[derive(Touchable)]
 struct WithSlice<'a> {
-    s: &'a [u8],
+    a: &'a [u8],
     b: &'a mut [u8],
+    c: [u8; 64],
 }
 
 #[derive(Touchable)]
-struct WithSkipped {
+struct WithSkipped<T> {
     a: u8,
     #[touched(skip)]
-    b: core::marker::PhantomData<()>,
+    b: core::marker::PhantomData<T>,
+}
+
+#[derive(Touchable)]
+struct WithTuple {
+    a: u8,
+    b: (u8, u32),
+    c: (),
 }
 
 #[derive(Touchable)]
