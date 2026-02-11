@@ -66,6 +66,28 @@ impl ToTokens for TouchableReceiver {
     }
 }
 
+/// Derive macro for [`Touchable`][Touchable-trait] trait.
+///
+/// You should make sure each fields of the struct are primitive types,
+/// or implement [`Touchable`][Touchable-trait] trait. Otherwise you can
+/// use `#[touched(skip)]` to skip touching that field.
+///
+/// # Usage
+///
+/// ```rust
+/// # struct OtherData;
+/// use touched::Touchable;
+///
+/// #[derive(Touchable)]
+/// pub struct MyData {
+///     pub a: u8,
+///     pub b: [u8; 64],
+///     #[touched(skip)] // <-- OtherData does not implement Touchable
+///     pub c: OtherData
+/// }
+/// ```
+///
+/// [Touchable-trait]: https://docs.rs/touched/latest/touched/trait.Touchable.html
 #[proc_macro_derive(Touchable, attributes(touched))]
 pub fn my_macro(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
