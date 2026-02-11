@@ -19,5 +19,5 @@ default = []
 derive = ["dep:touched-derive"]
 
 [dependencies]
-touched-derive = { workspace = true, optional = true }
+touched-derive = { path = "../touched-derive", version = "0.1", optional = true }
 impl-trait-for-tuples = "0.2"

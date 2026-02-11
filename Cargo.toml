@@ -2,10 +2,6 @@
 resolver = "3"
 members = ["touched", "touched-derive"]
 
-[workspace.dependencies]
-touched = { path = "./touched", version = "0.1.0" }
-touched-derive = { path = "./touched-derive", version = "0.1.0" }
-
 [workspace.package]
 edition = "2024"
 license = "MIT OR Apache-2.0"

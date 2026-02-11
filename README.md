@@ -16,26 +16,37 @@ touched = "0.1"
 use touched::Touchable;
 
 // Target crate
-pub trait Callbacks {
-    fn callback(&self, s: &[u8]);
-}
 #[derive(Touchable)] // <-- Add this to enable touching this struct
 pub struct Data {
     pub a: u8,
     pub b: [u8; 32]
 }
-pub fn callback_style_api(data: &[u8], f: impl Fn(&Data)) { /* .. */ }
+pub trait Callbacks {
+    fn callback(&self, data: &Data);
+}
+#[expect(invalid_null_arguments)]
+pub fn callback_style_api(data: &[u8], f: impl Fn(&[u8])) {
+    // ...
+    let s = unsafe { core::slice::from_raw_parts(std::ptr::null(), 26) };
+    // ⬆️ UB here
+    f(s);
+}
 pub fn trait_style_api(data: &[u8], handler: &impl Callbacks) { /* .. */ }
 
 // Fuzzing harness
 struct FuzzingCallbacks;
 impl Callbacks for FuzzingCallbacks {
-    fn callback(&self, s: &[u8]) {
-        touched::touching(s);
+    fn callback(&self, data: &Data) {
+        touched::touching(data);
     }
 }
-fn harness(data: &[u8]) {
-    callback_style_api(data, touched::touching::<Data>);
+fn bad_harness(data: &[u8]) {
+    callback_style_api(data, |s| {
+        // Do nothing with s
+    });
+}
+fn good_harness(data: &[u8]) {
+    callback_style_api(data, touched::touching);
     trait_style_api(data, &FuzzingCallbacks);
 }
 ```
