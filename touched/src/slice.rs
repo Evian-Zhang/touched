@@ -1,18 +1,18 @@
-use crate::Touched;
+use crate::Touchable;
 
-impl<T: Touched> Touched for [T] {
+impl<T: Touchable> Touchable for [T] {
     fn touch(&self) {
         self.iter().for_each(crate::touching);
     }
 }
 
-impl Touched for str {
+impl Touchable for str {
     fn touch(&self) {
         crate::touching(self.as_bytes());
     }
 }
 
-impl Touched for core::ffi::CStr {
+impl Touchable for core::ffi::CStr {
     fn touch(&self) {
         crate::touching(self.to_bytes_with_nul());
     }

@@ -7,4 +7,14 @@ repository.workspace = true
 homepage.workspace = true
 readme.workspace = true
 
+[lib]
+proc-macro = true
+
 [dependencies]
+syn = "2.0"
+quote = "1.0"
+proc-macro2 = "1.0"
+darling = "0.23"
+
+[dev-dependencies]
+touched = { workspace = true, features = ["derive"] }

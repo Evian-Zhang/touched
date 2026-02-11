@@ -4,22 +4,25 @@ mod primitive;
 mod slice;
 mod util;
 
-pub trait Touched {
+#[cfg(feature = "derive")]
+pub use touched_derive::Touchable;
+
+pub trait Touchable {
     fn touch(&self);
 }
 
-impl Touched for usize {
-    fn touch(&self) {
-        let _ = core::hint::black_box::<usize>(*self);
-    }
-}
-
-impl<T: Touched> Touched for &T {
+impl<T: Touchable + ?Sized> Touchable for &T {
     fn touch(&self) {
         touching::<T>(*self)
     }
 }
 
-pub fn touching<T: Touched + ?Sized>(t: &T) {
-    <T as Touched>::touch(t);
+impl<T: Touchable + ?Sized> Touchable for &mut T {
+    fn touch(&self) {
+        touching::<T>(*self)
+    }
+}
+
+pub fn touching<T: Touchable + ?Sized>(t: &T) {
+    <T as Touchable>::touch(t);
 }

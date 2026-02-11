@@ -7,4 +7,9 @@ repository.workspace = true
 homepage.workspace = true
 readme.workspace = true
 
+[features]
+default = []
+derive = ["dep:touched-derive"]
+
 [dependencies]
+touched-derive = { workspace = true, optional = true }
