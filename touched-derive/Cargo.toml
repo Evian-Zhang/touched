@@ -1,6 +1,9 @@
 [package]
 name = "touched-derive"
+description = "Derive macro `Touchable` for `touched` crate."
+keyword = ["fuzzing", "sanitizer", "callback"]
 version = "0.1.0"
+categories = ["development-tools::testing", "security"]
 edition.workspace = true
 license.workspace = true
 repository.workspace = true

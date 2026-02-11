@@ -1,14 +1,21 @@
 [package]
 name = "touched"
+description = "Utility for writing fuzzing harnesses of callback-style and trait-style Rust crates"
+keywords = ["fuzzing", "sanitizer", "callback"]
 version = "0.1.0"
+categories = ["no-std", "development-tools::testing", "security"]
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
 homepage.workspace = true
 readme.workspace = true
 
+[package.metadata.docs.rs]
+all-features = true
+
 [features]
 default = []
+## Enable derive macro `Touchable`
 derive = ["dep:touched-derive"]
 
 [dependencies]

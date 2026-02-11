@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use darling::{FromDeriveInput, FromField, ast};
 use proc_macro2::TokenStream;
 use quote::{ToTokens, quote};
